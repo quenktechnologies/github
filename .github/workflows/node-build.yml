@@ -1,0 +1,21 @@
+name: Build a Node.js project.
+
+on:
+  workflow_call:
+    secrets:
+      NPM_TOKEN:
+        required: true
+
+jobs:
+  node_build:    
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          registry-url: 'https://registry.npmjs.org'
+      - run: npm ci
+      - run: make
+      - run: npm run -s test
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
