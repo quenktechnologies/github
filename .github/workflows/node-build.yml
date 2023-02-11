@@ -23,6 +23,16 @@ jobs:
         with:
           name: mochawesome-report
           path: mochawesome-report
+      - run: sudo apt-get install jq
+      - name: Output summary
+        id: results
+        run: |
+          results=$(cat mochawesome-report/mochawesome.json | jq '[.suites[].tests[] | {test: .title, status:.pass? "Passed" : "Failed"}]')
+          echo "### Test Results"
+          echo "| Test | Status |"
+          echo "| ---- | ------ |"
+          echo "$(echo "$results" | jq -r '.[] | "\(.test) | \(.status)"')"
+          echo "The full report can be found in the artifacts"
 
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
