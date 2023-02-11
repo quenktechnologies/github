@@ -15,7 +15,7 @@ jobs:
         with:
           registry-url: 'https://registry.npmjs.org'
       - run: npm ci
-      - run: npm ci mochawesome
+      - run: npm install --no-save mochawesome
       - run: make
       - run: npm run -s test -- --reporter mochawesome
       - name: Upload Report
