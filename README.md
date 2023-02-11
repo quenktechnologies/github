@@ -1,2 +1,2 @@
-# quenk-actions
-Github Actions workflows for Quenk Technologies Limited projects.
+# .github
+Quenk Technologies Github Actions workflows etc.
