@@ -2,6 +2,11 @@ name: Build a Node.js project.
 
 on:
   workflow_call:
+    inputs:
+      setup:
+        type: string
+        default: "echo ''"
+        required: false
     secrets:
       NPM_TOKEN:
         required: true
@@ -14,6 +19,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           registry-url: 'https://registry.npmjs.org'
+      - run: ${{ inputs.setup }}
       - run: npm ci
       - run: make
       - run: npm run -s test -- --reporter tap
