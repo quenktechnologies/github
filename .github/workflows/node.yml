@@ -1,0 +1,37 @@
+name: Build and publish a Node.js module to NPM.
+
+on:
+  workflow_call:
+    inputs:
+      target:
+        type: string
+        default: "build_release"
+        required: false
+    secrets:
+      NPM_TOKEN:
+        required: true
+jobs:
+  build_release:
+    if: ${{ inputs.target == 'build_release' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: build and test
+        uses: quenktechnologies/github-action-build-node-module@v1.1
+      - name: publish
+        if: ${{ github.event_name == 'push' && github.ref_type == 'tag' }}
+        run: npm publish --access public
+
+  build_release_mongodb:
+    if: ${{ inputs.target == 'build_release' }}
+    runs-on: ubuntu-latest
+    services:
+      mongodb:
+        image: mongo
+        ports:
+          - 27017:27017
+    steps:
+      - name: build and test
+        uses: quenktechnologies/github-action-build-node-module@v1.1
+      - name: publish
+        if: ${{ github.event_name == 'push' && github.ref_type == 'tag' }}
+        run: npm publish --access public
