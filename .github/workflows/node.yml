@@ -22,7 +22,7 @@ jobs:
         run: npm publish --access public
 
   build_release_mongodb:
-    if: ${{ inputs.target == 'build_release' }}
+    if: ${{ inputs.target == 'build_release_mongodb' }}
     runs-on: ubuntu-latest
     services:
       mongodb:
