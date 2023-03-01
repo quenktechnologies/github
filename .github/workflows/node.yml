@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: build and test
-        uses: quenktechnologies/github-action-build-node-module@v1.1
+        uses: quenktechnologies/github-action-build-node-module@master
       - name: publish
         if: ${{ github.event_name == 'push' && github.ref_type == 'tag' }}
         run: npm publish --access public
@@ -31,7 +31,7 @@ jobs:
           - 27017:27017
     steps:
       - name: build and test
-        uses: quenktechnologies/github-action-build-node-module@v1.1
+        uses: quenktechnologies/github-action-build-node-module@master
       - name: publish
         if: ${{ github.event_name == 'push' && github.ref_type == 'tag' }}
         run: npm publish --access public
