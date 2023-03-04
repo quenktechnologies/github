@@ -19,6 +19,10 @@ jobs:
         uses: quenktechnologies/github-action-build-node-module@master
       - name: publish
         if: ${{ github.event_name == 'push' && github.ref_type == 'tag' }}
+        with:
+          registry-url: 'https://registry.npmjs.org'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npm publish --access public
 
   build_release_mongodb:
@@ -34,4 +38,8 @@ jobs:
         uses: quenktechnologies/github-action-build-node-module@master
       - name: publish
         if: ${{ github.event_name == 'push' && github.ref_type == 'tag' }}
+        with:
+          registry-url: 'https://registry.npmjs.org'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npm publish --access public
