@@ -5,9 +5,12 @@ runs:
     using: "composite"
     steps:
       - run: |
-        commit_message=$(git log -1 --pretty=%B)
-        release_value=$(echo "$commit_message" |  sed -n 's/.*release=\([^[:space:]]*\).*/\1/p')
-        if [ -n "$release_value" ]; then
-         npm version $release_value
-         npm publish
-        fi
+          commit_message=$(git log -1 --pretty=%B)
+          release_value=$(echo "$commit_message" |  sed -n 's/.*release=\([^[:space:]]*\).*/\1/p')
+          if [ -n "$release_value" ]; then
+            npm version $release_value
+            npm publish
+          fi
+        shell: bash
+
+
