@@ -1,5 +1,10 @@
 name: build
 description: Checks out, lints, builds and tests a Node.js module.
+inputs:
+  artifact_retention_days:
+    type: number
+    default: 3
+    required: false
 
 runs:
     using: "composite"
@@ -20,3 +25,10 @@ runs:
       - name: test
         run: npm run -s test --if-present -- --reporter tap
         shell: bash
+      - uses: actions/upload-artifact@v3
+        with:
+          name: "$(git branch --show-current)-artifact"
+          retention-days: ${{ inputs.artifact_retention_days }}
+          path: |
+            **/*
+            !*node_modules*

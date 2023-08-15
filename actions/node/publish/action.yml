@@ -1,9 +1,16 @@
 name: publish
 description: Publish package on "release=<version>" in commit message.
+inputs:
+  artifact:
+    type: string
+    required: true
 
 runs:
     using: "composite"
     steps:
+      - uses: actions/download-artifact@v3
+        with:
+        name: ${{ inputs.artifact }}
       - run: |
           commit_message=$(git log -1 --pretty=%B)
           release_value=$(echo "$commit_message" |  sed -n 's/.*release=\([^[:space:]]*\).*/\1/p')
