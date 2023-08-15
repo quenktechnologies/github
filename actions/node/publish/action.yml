@@ -16,7 +16,9 @@ runs:
           release_value=$(echo "$commit_message" |  sed -n 's/.*release=\([^[:space:]]*\).*/\1/p')
           if [ -n "$release_value" ]; then
             npm version $release_value
-            npm publish
+            npm publish --access public
+          else
+            echo "No release detected..."
           fi
         shell: bash
 
