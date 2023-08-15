@@ -14,5 +14,11 @@ runs:
           BRANCH=$(git branch --show-current)
           TITLE=$(git log -1 --format=%s HEAD)
           BODY=$(git log -1 --format=%B HEAD)
-          gh pr create --title "$TITLE" --body "$BODY" --base ${{inputs.base}} --head "$BRANCH"
+          prexists=$(gh pr view "$BRANCH")
+          echo "$prexists LLLLL"
+          if [ "$prexists" -eq 0]; then
+            echo "Pull-request already exists for $BRANCH..."
+          else
+            gh pr create --title "$TITLE" --body "$BODY" --base ${{inputs.base}} --head "$BRANCH"
+          fi
       shell: bash

@@ -5,6 +5,10 @@ inputs:
     type: number
     default: 3
     required: false
+  artifact:
+    type: string
+    default: ${{ github.ref_name}}
+    required: false
 
 runs:
     using: "composite"
@@ -26,10 +30,8 @@ runs:
         run: npm run -s test --if-present -- --reporter tap
         shell: bash
       - uses: actions/upload-artifact@v3
-        env:
-          ARTIFACT_NAME: "$(git branch --show-current)-artifact"
         with:
-          name: ${{env.ARTIFACT_NAME}}
+          name: ${{inputs.artifact}}
           retention-days: ${{ inputs.artifact_retention_days }}
           path: |
             **/*
