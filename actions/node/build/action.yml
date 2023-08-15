@@ -26,9 +26,10 @@ runs:
         run: npm run -s test --if-present -- --reporter tap
         shell: bash
       - uses: actions/upload-artifact@v3
+        env:
+          ARTIFACT_NAME: "$(git branch --show-current)-artifact"
         with:
-          name: "$(git branch --show-current)-artifact"
+          name: ${{env.ARTIFACT_NAME}}
           retention-days: ${{ inputs.artifact_retention_days }}
           path: |
             **/*
-            !*node_modules*
