@@ -11,14 +11,13 @@ runs:
   steps:
     - uses: actions/checkout@v3
     - run: |
-          BRANCH=$(git branch --show-current)
-          TITLE=$(git log -1 --format=%s HEAD)
-          BODY=$(git log -1 --format=%B HEAD)
-          prexists=$(gh pr view "$BRANCH")
-          echo "$prexists LLLLL"
+          branch=$(git branch --show-current)
+          title=$(git log -1 --format=%s HEAD)
+          body=$(git log -1 --format=%B HEAD)
+          prexists=$(gh pr view "$branch")
           if [ -z "$prexists" ]; then
-            gh pr create --title "$TITLE" --body "$BODY" --base ${{inputs.base}} --head "$BRANCH"
+            gh pr create --title "$title" --body "$body" --base ${{inputs.base}} --head "$branch"
           else
-            echo "Pull-request already exists for $BRANCH..."
+            echo "Pull-request already exists for $branch..."
           fi
       shell: bash
