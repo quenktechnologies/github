@@ -4,6 +4,7 @@ description: Create a pull request from the current branch
 runs:
   using: "composite"
   steps:
+    - uses: actions/checkout@v3
     - run: |
           BRANCH=$(git branch --show-current)
           TITLE=$(git log -1 --format=%s HEAD)
