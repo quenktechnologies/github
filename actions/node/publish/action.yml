@@ -10,7 +10,7 @@ runs:
     steps:
       - uses: actions/download-artifact@v3
         with:
-        name: ${{ inputs.artifact }}
+          name: ${{ inputs.artifact }}
       - run: |
           commit_message=$(git log -1 --pretty=%B)
           release_value=$(echo "$commit_message" |  sed -n 's/.*release=\([^[:space:]]*\).*/\1/p')

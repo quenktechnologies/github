@@ -1,5 +1,5 @@
 name: auto-pr
-description: Create a pull request from the current branch
+description: Create a pull request from the current branch.
 inputs:
   base:
     type: string
