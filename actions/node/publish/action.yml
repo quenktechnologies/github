@@ -4,6 +4,10 @@ inputs:
   artifact:
     type: string
     required: true
+  email:
+    type: string
+    default: "dev@example.com"
+    required: false
 
 runs:
     using: "composite"
@@ -15,6 +19,8 @@ runs:
           commit_message=$(git log -1 --pretty=%B)
           release_value=$(echo "$commit_message" |  sed -n 's/.*release=\([^[:space:]]*\).*/\1/p')
           if [ -n "$release_value" ]; then
+            git config --global user.email ${{ inputs.email }}
+            git config --global user.name ${{ github.actor }}
             npm version $release_value
             npm publish --access public
           else
